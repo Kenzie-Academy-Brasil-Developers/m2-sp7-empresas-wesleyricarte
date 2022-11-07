@@ -5,7 +5,7 @@ const baseUrl = "http://localhost:6278";
 
 export async function createUser(data) {
   try {
-    const request = awaitfetch(baseUrl + "/auth/register", {
+    const request = await fetch(baseUrl + "/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

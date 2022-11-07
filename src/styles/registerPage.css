@@ -64,6 +64,15 @@ nav {
   gap: 0.813rem;
 }
 
+#professional_level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 3.25rem;
+  padding: 0 1rem;
+}
+
 .form-register-user {
   display: flex;
   align-items: center;

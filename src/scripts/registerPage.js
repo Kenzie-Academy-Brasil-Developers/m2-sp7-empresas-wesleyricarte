@@ -13,9 +13,9 @@ function redirectHomePage() {
 }
 redirectHomePage();
 
-function eventRegister() {
+async function eventRegister() {
   const inputs = document.querySelectorAll(".inputs-update-user-profile");
-  const selectLevel = document.querySelector("select");
+  const selectLevel = document.querySelector("#professional_level");
   const btnRegister = document.querySelector(".button-submit-register-user");
   let data = {};
 
@@ -29,7 +29,11 @@ function eventRegister() {
     data[selectLevel.name] = selectLevel.value;
 
     console.log(data);
-    createUser(data);
+    callbackCreateUser (data);
   });
 }
 eventRegister();
+
+async function callbackCreateUser (data) {
+  await createUser(data)
+}
