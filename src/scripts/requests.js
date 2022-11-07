@@ -43,6 +43,11 @@ export async function login(data) {
       toast("Você fez login com sucesso!");
       localStorage.removeItem("@kenzieEmpresas:token");
       localStorage.setItem("@kenzieEmpresas:token", JSON.stringify(response));
+
+      console.log(response);
+
+      await validateUser(response);
+
       return response;
     } else {
       toast("Login incorreto!");
@@ -53,36 +58,45 @@ export async function login(data) {
 }
 
 export async function validateUser(tokenObj) {
-  const token = tokenObj.token;
-  // console.log(token);
-  fetch(baseUrl + "/auth/validate_user", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        // console.log(res);
-        // console.log("validado");
-        // setTimeout(() => {}, 4000);
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      if (res.is_admin) {
+  try {
+    const token = tokenObj.token;
+    console.log(token);
+
+    const request = await fetch(baseUrl + "/auth/validate_user", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (request.ok) {
+      const response = await request.json();
+
+      if (response.is_admin) {
         console.log("is admin is true, so let's go to adminPage");
-        window.location.replace("./adminPage.html");
+        setTimeout(() => {
+          window.location.replace("./adminPage.html");
+        }, 4000);
       } else {
         console.log("is admin is false, so let's go to userPage");
-        window.location.replace("./userPage.html");
+        setTimeout(() => {
+          window.location.replace("./userPage.html");
+        }, 4000);
       }
       localStorage.setItem("@kenzieEmpresas:is_admin", "");
-      localStorage.setItem("@kenzieEmpresas:is_admin", JSON.stringify(res));
-    });
+      localStorage.setItem(
+        "@kenzieEmpresas:is_admin",
+        JSON.stringify(response)
+      );
+
+      console.log(response);
+
+      return response;
+    } else {
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function listCompanies() {
@@ -116,7 +130,7 @@ export async function listCompaniesSector(sector) {
         "@kenzieEmpresas:sector-selected",
         JSON.stringify(response)
       );
-      console.log(response)
+      console.log(response);
       return response;
     }
   } catch (err) {
