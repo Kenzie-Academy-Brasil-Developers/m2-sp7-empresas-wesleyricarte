@@ -9,16 +9,12 @@ import {
 import { redirectEvent } from "./redirect.js";
 redirectEvent();
 
-function renderDepartments() {
+async function renderDepartments() {
   const selectDepartment = document.querySelector("#sector");
 
-  listAllSectors();
+  const allSectors = await listAllSectors();
 
-  const allSectors = JSON.parse(
-    localStorage.getItem("@kenzieEmpresas:sectors")
-  );
-
-  // console.log(allSectors);
+  console.log(allSectors);
 
   allSectors.forEach((element) => {
     let option = document.createElement("option");
@@ -38,26 +34,22 @@ function renderDepartments() {
     if (sectorSelectedByUser === "selecionar setor") {
       getCompaniesToRender();
     } else {
-      listCompaniesSector(sectorSelectedByUser);
-      setTimeout(() => {
-        let sectorArray = JSON.parse(
-          localStorage.getItem("@kenzieEmpresas:sector-selected")
-        );
-        // console.log(sectorArray);
-
-        renderCompanies(sectorArray);
-      }, 50);
+      // console.log(sectorArray);
+      callRequestArray(sectorSelectedByUser);
     }
   });
 }
 renderDepartments();
 
-function getCompaniesToRender() {
-  listCompanies();
-  const allCompanies = JSON.parse(
-    localStorage.getItem("@kenzieEmpresas:companies")
-  );
-  // console.log(allCompanies);
+async function callRequestArray(sectorSelectedByUser) {
+  const sectorArray = await listCompaniesSector(sectorSelectedByUser);
+
+  renderCompanies(sectorArray);
+}
+
+async function getCompaniesToRender() {
+  const allCompanies = await listCompanies();
+  console.log(allCompanies);
 
   renderCompanies(allCompanies);
 }

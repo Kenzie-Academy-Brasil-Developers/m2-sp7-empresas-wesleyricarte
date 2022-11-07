@@ -3,59 +3,56 @@ import { toast } from "./toasts.js";
 
 const baseUrl = "http://localhost:6278";
 
-export function createUser(data) {
-  fetch(baseUrl + "/auth/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        toast("Sua conta foi criada com sucesso!");
-        setTimeout(() => {
-          window.location.replace("./loginPage.html");
-        }, 4000);
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Sua conta não foi criada!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
+export async function createUser(data) {
+  try {
+    const request = awaitfetch(baseUrl + "/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
-}
 
-export function login(data) {
-  fetch(baseUrl + "/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        toast("Você fez login com sucesso!");
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Login incorreto!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
+    if (request.ok) {
+      const response = await request.json();
+      toast("Sua conta foi criada com sucesso!");
       setTimeout(() => {
-        localStorage.setItem("@kenzieEmpresas:token", "");
-        localStorage.setItem("@kenzieEmpresas:token", JSON.stringify(res));
-        validateUser(res);
+        window.location.replace("./loginPage.html");
       }, 4000);
-    });
+      return response;
+    } else {
+      toast("Sua conta não foi criada!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function validateUser(tokenObj) {
+export async function login(data) {
+  try {
+    const request = await fetch(baseUrl + "/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (request.ok) {
+      const response = await request.json();
+      toast("Você fez login com sucesso!");
+      localStorage.removeItem("@kenzieEmpresas:token");
+      localStorage.setItem("@kenzieEmpresas:token", JSON.stringify(response));
+      return response;
+    } else {
+      toast("Login incorreto!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function validateUser(tokenObj) {
   const token = tokenObj.token;
   // console.log(token);
   fetch(baseUrl + "/auth/validate_user", {
@@ -88,154 +85,155 @@ export function validateUser(tokenObj) {
     });
 }
 
-export function listCompanies() {
-  fetch(baseUrl + "/companies", {
-    method: "GET",
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem("@kenzieEmpresas:companies", JSON.stringify(res));
-      return res;
+export async function listCompanies() {
+  try {
+    const request = await fetch(baseUrl + "/companies", {
+      method: "GET",
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      localStorage.setItem(
+        "@kenzieEmpresas:companies",
+        JSON.stringify(response)
+      );
+      return response;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function listCompaniesSector(sector) {
-  fetch(baseUrl + "/companies/" + sector, {
-    method: "GET",
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-      }
-    })
-    .then((res) => {
-      console.log(res);
+export async function listCompaniesSector(sector) {
+  try {
+    const request = await fetch(baseUrl + "/companies/" + sector, {
+      method: "GET",
+    });
+
+    if (request.ok) {
+      const response = await request.json();
       localStorage.setItem(
         "@kenzieEmpresas:sector-selected",
-        JSON.stringify(res)
+        JSON.stringify(response)
       );
-    });
+      console.log(response)
+      return response;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function listAllSectors() {
-  fetch(baseUrl + "/sectors", {
-    method: "GET",
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem("@kenzieEmpresas:sectors", JSON.stringify(res));
+export async function listAllSectors() {
+  try {
+    const request = await fetch(baseUrl + "/sectors", {
+      method: "GET",
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      localStorage.setItem("@kenzieEmpresas:sectors", JSON.stringify(response));
+      return response;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function getUserProfile(token) {
-  fetch(baseUrl + "/users/profile", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-      }
-    })
-    .then((res) => {
+export async function getUserProfile(token) {
+  try {
+    const request = await fetch(baseUrl + "/users/profile", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (request.ok) {
+      const response = await request.json();
       localStorage.removeItem("@kenzieEmpresas:user-profile");
-      localStorage.setItem("@kenzieEmpresas:user-profile", JSON.stringify(res));
-      console.log(res);
-    });
+      localStorage.setItem(
+        "@kenzieEmpresas:user-profile",
+        JSON.stringify(response)
+      );
+      return response;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function getUserCoworkers(token) {
-  fetch(baseUrl + "/users/departments/coworkers", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-      }
-    })
-    .then((res) => {
-      console.log(res);
+export async function getUserCoworkers(token) {
+  try {
+    const request = await fetch(baseUrl + "/users/departments/coworkers", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (request.ok) {
+      const response = await request.json();
       localStorage.setItem(
         "@kenzieEmpresas:user-coworkers",
-        JSON.stringify(res)
+        JSON.stringify(response)
       );
-    });
+      return response;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function getUserDepartments(token) {
-  fetch(baseUrl + "/users/departments", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-      }
-    })
-    .then((res) => {
+export async function getUserDepartments(token) {
+  try {
+    const request = await fetch(baseUrl + "/users/departments", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (request.ok) {
+      const response = await request.json();
       localStorage.setItem(
         "@kenzieEmpresas:user-departments",
-        JSON.stringify(res)
+        JSON.stringify(response)
       );
-      console.log(res);
-    });
+      return response;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function updateUserProfile(data) {
-  const token = getLocalStorage("@kenzieEmpresas:token");
-  fetch(baseUrl + "/users", {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        localStorage.removeItem("@kenzieEmpresas:user-profile");
-        localStorage.setItem(
-          "@kenzieEmpresas:user-profile",
-          JSON.stringify(res)
-        );
-        toast("Perfil atualizado com sucesso!");
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Erro ao atualizar o perfil!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
+export async function updateUserProfile(data) {
+  try {
+    const token = getLocalStorage("@kenzieEmpresas:token");
+
+    const request = await fetch(baseUrl + "/users", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      localStorage.removeItem("@kenzieEmpresas:user-profile");
+      localStorage.setItem(
+        "@kenzieEmpresas:user-profile",
+        JSON.stringify(response)
+      );
+      toast("Perfil atualizado com sucesso!");
+      return response;
+    } else {
+      toast("Erro ao atualizar o perfil!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // ADMIN REQUESTS
@@ -268,7 +266,7 @@ export async function listUsersOutOfWork(token) {
     });
 
     if (request.ok) {
-      const response = request.json();
+      const response = await request.json();
       return response;
     }
   } catch (err) {
@@ -276,81 +274,85 @@ export async function listUsersOutOfWork(token) {
   }
 }
 
-export function updateUserInfo(token, userId, data) {
-  fetch(baseUrl + "/admin/update_user/" + userId, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        window.location.reload();
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Usuário não foi atualizado!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem(
-        "@kenzieEmpresas:user-updated-by-admin",
-        JSON.stringify(res)
-      );
-      toast("Usuário atualizado com sucesso!");
+export async function updateUserInfo(token, userId, data) {
+  try {
+    const request = await fetch(baseUrl + "/admin/update_user/" + userId, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      window.location.reload();
+      toast("Usuário atualizado com sucesso!");
+      console.log(response);
+      return response;
+    } else {
+      toast("Usuário não foi atualizado!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function deleteUser(userId) {
-  const token = getLocalStorage("@kenzieEmpresas:token");
-  fetch(baseUrl + "/admin/delete_user/" + userId, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Usuário não deletado!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      toast("Usuário deletado com sucesso!");
+export async function deleteUser(userId) {
+  try {
+    const token = getLocalStorage("@kenzieEmpresas:token");
+
+    const request = await fetch(baseUrl + "/admin/delete_user/" + userId, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      toast("Usuário deletado com sucesso!");
+      console.log(response);
+      return response;
+    } else {
+      toast("Usuário não deletado!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // COMPANY REQUESTS
 
-export function registerCompany(data) {
-  const token = getLocalStorage("@kenzieEmpresas:token");
-  fetch(baseUrl + "/companies", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Empresa não registrada!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem("@kenzieEmpresas:new-company", JSON.stringify(res));
-      toast("Empresa registrada com sucesso!");
+export async function registerCompany(data) {
+  try {
+    const token = getLocalStorage("@kenzieEmpresas:token");
+
+    const request = await fetch(baseUrl + "/companies", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      toast("Empresa registrada com sucesso!");
+      localStorage.setItem(
+        "@kenzieEmpresas:new-company",
+        JSON.stringify(response)
+      );
+      console.log(response);
+      return response;
+    } else {
+      toast("Empresa não registrada!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function listAllDepartments(token) {
@@ -400,7 +402,7 @@ export async function createDepartment(token, data) {
     });
 
     if (request.ok) {
-      const response = request.json();
+      const response = await request.json();
       toast("Departamento criado com sucesso!");
       return response;
     } else {
@@ -411,58 +413,54 @@ export async function createDepartment(token, data) {
   }
 }
 
-export function hireWorker(data) {
-  const token = getLocalStorage("@kenzieEmpresas:token");
-  fetch(baseUrl + "/departments/hire", {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Erro na admissão!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem(
-        "@kenzieEmpresas:new-department",
-        JSON.stringify(res)
-      );
-      toast("Funcionário admitido com sucesso!");
+export async function hireWorker(data) {
+  try {
+    const token = getLocalStorage("@kenzieEmpresas:token");
+
+    const request = await fetch(baseUrl + "/departments/hire", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      toast("Funcionário admitido com sucesso!");
+
+      return response;
+    } else {
+      toast("Erro na admissão!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export function dismissWorker(userId) {
-  const token = getLocalStorage("@kenzieEmpresas:token");
-  fetch(baseUrl + "/departments/dismiss/" + userId, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.log(res.json().then((response) => response.message));
-        toast("Erro na demissão!");
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem(
-        "@kenzieEmpresas:new-department",
-        JSON.stringify(res)
-      );
-      toast("Funcionário demitido com sucesso!");
+export async function dismissWorker(userId) {
+  try {
+    const token = getLocalStorage("@kenzieEmpresas:token");
+
+    const request = await fetch(baseUrl + "/departments/dismiss/" + userId, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    if (request.ok) {
+      const response = await request.json();
+      toast("Funcionário demitido com sucesso!");
+      console.log(response);
+      return response;
+    } else {
+      toast("Erro na demissão!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function updateDepartment(token, departmentId, data) {
@@ -477,7 +475,7 @@ export async function updateDepartment(token, departmentId, data) {
     });
 
     if (request.ok) {
-      const response = request.json();
+      const response = await request.json();
       toast("Departamento atualizado com sucesso!");
       setTimeout(() => {
         window.location.reload();
@@ -501,7 +499,7 @@ export async function deleteDepartment(token, departmentId) {
     });
 
     if (request.ok) {
-      const response = request.json();
+      const response = await request.json();
       toast("Departamento deletado com sucesso!");
       setTimeout(() => {
         window.location.reload();
@@ -514,28 +512,3 @@ export async function deleteDepartment(token, departmentId) {
     console.log(err);
   }
 }
-
-// export {
-//   createUser,
-//   login,
-//   validateUser,
-//   listCompanies,
-//   listCompaniesSector,
-//   listAllSectors,
-//   getUserProfile,
-//   getUserCoworkers,
-//   getUserDepartments,
-//   updateUserProfile,
-//   listAllUsers,
-//   listUsersOutOfWork,
-//   updateUserInfo,
-//   deleteUser,
-//   registerCompany,
-//   listAllDepartments,
-//   listAllDepartmentsCompany,
-//   createDepartment,
-//   hireWorker,
-//   dismissWorker,
-//   updateDepartment,
-//   deleteDepartment,
-// };
