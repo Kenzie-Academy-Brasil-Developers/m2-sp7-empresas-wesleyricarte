@@ -29,7 +29,7 @@ export function verifyTokenUser() {
       let user = JSON.parse(
         localStorage.getItem("@kenzieEmpresas:user-profile")
       );
-      console.log(user);
+      // console.log(user);
 
       showDivUsername(user);
 
@@ -101,26 +101,28 @@ function showBoxNotWorking() {
 
 // FUNCITON TO SHOW DEPARTMENT
 
-function showUserDepartment(user, token) {
+async function showUserDepartment(user, token) {
   const container = document.querySelector("#main-container");
 
-  getUserDepartments(token);
-  getUserCoworkers(token);
+  // const userDepartments = getUserDepartments(token)
+  // const userCoworkers = getUserCoworkers(token)
 
-  setTimeout(() => {
-    const userDepartments = JSON.parse(
-      localStorage.getItem("@kenzieEmpresas:user-departments")
-    );
-    const userCoworkers = JSON.parse(
-      localStorage.getItem("@kenzieEmpresas:user-coworkers")
-    )[0];
+  await getUserCoworkers(token);
+  await getUserDepartments(token);
 
-    console.log(userDepartments);
-    console.log(userCoworkers);
+  const userCoworkers = JSON.parse(
+    localStorage.getItem("@kenzieEmpresas:user-coworkers")
+  )[0];
+  const userDepartments = JSON.parse(
+    localStorage.getItem("@kenzieEmpresas:user-departments")
+  );
 
-    container.insertAdjacentHTML(
-      "beforeend",
-      `<section class="section-company">
+  console.log(userCoworkers);
+  console.log(userDepartments);
+
+  container.insertAdjacentHTML(
+    "beforeend",
+    `<section class="section-company">
          <div class="div-company-header">
            <h2 class="font32-bold-inter text-white">
            ${userDepartments.name} - ${userCoworkers.name}
@@ -130,22 +132,21 @@ function showUserDepartment(user, token) {
            <div class="box-department-cards"></div>
          </div>
        </section>`
-    );
+  );
 
-    const boxDepartmentCards = document.querySelector(".box-department-cards");
+  const boxDepartmentCards = document.querySelector(".box-department-cards");
 
-    const coworkers = userCoworkers.users;
+  const coworkers = userCoworkers.users;
 
-    console.log(coworkers);
+  // console.log(coworkers);
 
-    for (let i = 0; i < coworkers.length; i++) {
-      boxDepartmentCards.insertAdjacentHTML(
-        "beforeend",
-        `<div class="box-card-coworker">
+  for (let i = 0; i < coworkers.length; i++) {
+    boxDepartmentCards.insertAdjacentHTML(
+      "beforeend",
+      `<div class="box-card-coworker">
           <h5 class="font15-bold-inter">${coworkers[i].username}</h5>
           <h6 class="font15-regular-inter">${coworkers[i].professional_level}</h6>
         </div>`
-      );
-    }
-  }, 150);
+    );
+  }
 }

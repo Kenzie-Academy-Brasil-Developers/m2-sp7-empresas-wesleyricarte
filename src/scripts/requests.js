@@ -192,6 +192,8 @@ export async function getUserCoworkers(token) {
         "@kenzieEmpresas:user-coworkers",
         JSON.stringify(response)
       );
+
+      console.log(response)
       return response;
     }
   } catch (err) {
@@ -214,6 +216,8 @@ export async function getUserDepartments(token) {
         "@kenzieEmpresas:user-departments",
         JSON.stringify(response)
       );
+
+      console.log(response)
       return response;
     }
   } catch (err) {
