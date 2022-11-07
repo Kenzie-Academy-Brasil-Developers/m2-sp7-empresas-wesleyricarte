@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kenzie Empresas | Registrar</title>
+
+    <link rel="stylesheet" href="../styles/globalStyles.css" />
+    <link rel="stylesheet" href="../styles/texts.css" />
+    <link rel="stylesheet" href="../styles/buttons.css" />
+    <link rel="stylesheet" href="../styles/inputs.css" />
+    <link rel="stylesheet" href="../styles/modals.css" />
+    <link rel="stylesheet" href="../styles/toasts.css" />
+    <link rel="stylesheet" href="../styles/registerPage.css" />
+
+    <script
+      src="https://kit.fontawesome.com/a2a7b902de.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script defer type="module" src="../scripts/registerPage.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="div-logo">
+            <img src="../assets/Ellipse_purple.png" alt="kenzie empresas" />
+            <h1>Kenzie Empresas</h1>
+          </div>
+          <div class="div-login-register-buttons">
+            <button
+              data-path="../../index.html"
+              id="button-home-registerPage"
+              class="buttons-default buttons-white buttons-redirect"
+            >
+              Home
+            </button>
+            <button
+              data-path="./loginPage.html"
+              id="button-login-registerPage"
+              class="buttons-default buttons-blue buttons-redirect"
+            >
+              Login
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="container-register">
+      <main id="box-register">
+        <div class="div-modal-update-user-profile-header">
+          <h1 class="font40-bold-poppins">Cadastre-se</h1>
+        </div>
+        <form class="form-register-user">
+          <div class="form-register-inputs-select">
+            <input
+              name="username"
+              class="inputs-update-user-profile inputs-default font18-regular-inter text-black-50"
+              type="text"
+              placeholder="Seu nome"
+            />
+            <input
+              name="email"
+              class="inputs-update-user-profile inputs-default font18-regular-inter text-black-50"
+              type="email"
+              placeholder="Seu e-mail"
+            />
+            <input
+              name="password"
+              class="inputs-update-user-profile inputs-default font18-regular-inter text-black-50"
+              type="password"
+              placeholder="Sua senha"
+            />
+            <select
+              class="font17-regular-inter text-black-50"
+              name="professional_level"
+              id="professional_level"
+            >
+              <option
+                class="font17-regular-inter text-black-50"
+                value="estágio"
+                disabled
+                selected
+              >
+                Selecionar nível profissional
+              </option>
+              <option
+                class="font17-regular-inter text-black-50"
+                value="estágio"
+              >
+                Estágio
+              </option>
+              <option class="font17-regular-inter text-black-50" value="júnior">
+                Júnior
+              </option>
+              <option class="font17-regular-inter text-black-50" value="pleno">
+                Pleno
+              </option>
+              <option class="font17-regular-inter text-black-50" value="sênior">
+                Sênior
+              </option>
+            </select>
+          </div>
+          <button
+            class="button-submit-register-user buttons-default buttons-blue font18-bold-inter"
+            type="submit"
+          >
+            Cadastre-se
+          </button>
+          <button
+            id="button-return-registerPage"
+            class="buttons-default buttons-white font18-bold-inter"
+          >
+            Retornar
+          </button>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>

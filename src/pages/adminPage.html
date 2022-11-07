@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kenzie Empresas | Dashboard</title>
+
+    <link rel="stylesheet" href="../styles/globalStyles.css" />
+    <link rel="stylesheet" href="../styles/texts.css" />
+    <link rel="stylesheet" href="../styles/buttons.css" />
+    <link rel="stylesheet" href="../styles/inputs.css" />
+    <link rel="stylesheet" href="../styles/modals.css" />
+    <link rel="stylesheet" href="../styles/toasts.css" />
+    <link rel="stylesheet" href="../styles/adminPage.css" />
+
+    <script
+      src="https://kit.fontawesome.com/a2a7b902de.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script defer type="module" src="../scripts/adminPage.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="div-logo">
+            <img src="../assets/Ellipse_purple.png" alt="kenzie empresas" />
+            <h1>Kenzie Empresas</h1>
+          </div>
+          <div class="div-login-register-buttons">
+            <!-- <button id="hamburger-button" class="hidden">X</button> -->
+            <button
+              data-path="../../index.html"
+              id="button-logout-adminPage"
+              class="buttons-default buttons-white buttons-redirect"
+            >
+              Logout
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <main id="main-container" class="container">
+      <!-- SECTION DEPARTMENTS -->
+      <section class="section-departments-admin">
+        <div class="div-departments-admin-header">
+          <h2 class="font30-bold-inter">Departamentos</h2>
+          <select
+            class="font20-regular-inter"
+            name="select-companies"
+            id="select-companies"
+          >
+            <option
+              class="font20-regular-inter"
+              value="selecionar empresa"
+              selected
+              disabled
+            >
+              Selecionar Empresa
+            </option>
+          </select>
+          <div class="div-button-create-department buttons-blue">
+            <img
+              src="../assets/Vector_plus_white.png"
+              alt="criar departamento"
+            />
+            <h5 class="font18-bold-inter text-white">Criar</h5>
+          </div>
+        </div>
+        <div class="box-departments-admin-body"></div>
+      </section>
+      <!-- SECTION USERS -->
+      <section class="section-users-admin">
+        <div class="div-section-users-admin-header">
+          <h2 class="font30-bold-inter">Usuários Cadastrados</h2>
+        </div>
+        <div class="box-users-admin-body"></div>
+      </section>
+    </main>
+  </body>
+</html>

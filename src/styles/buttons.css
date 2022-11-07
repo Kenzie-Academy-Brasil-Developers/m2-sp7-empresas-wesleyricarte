@@ -1,0 +1,43 @@
+.buttons-default {
+  height: 3rem;
+  min-width: 8.875rem;
+  padding: 0 1rem;
+}
+
+.buttons-default:hover {
+  box-shadow: 10px 10px 5px -10px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+}
+
+.buttons-white {
+  background-color: var(--color-white);
+  color: var(--color-brand);
+  border: solid 1px var(--color-brand);
+}
+.buttons-blue {
+  background-color: var(--color-brand);
+  color: var(--color-white);
+  border: solid 1px var(--color-brand);
+}
+.buttons-green {
+  background-color: var(--color-green);
+  color: var(--color-white);
+  border: solid 1px var(--color-green);
+}
+.buttons-red {
+  background-color: var(--color-white);
+  color: var(--color-red);
+  border: solid 1px var(--color-red);
+}
+
+.buttons-sectors {
+  background-color: var(--color-white);
+  color: #4200ff;
+  border: solid 1px #4200ff;
+  height: 2rem;
+  border-radius: 1rem;
+  padding: 0rem 1.5rem;
+}
+.buttons-sectors:hover {
+  box-shadow: 10px 10px 15px -10px rgba(0, 0, 0, 0.75);
+}

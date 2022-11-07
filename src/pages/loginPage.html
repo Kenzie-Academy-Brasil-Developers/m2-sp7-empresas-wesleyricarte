@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kenzie Empresas | Login</title>
+
+    <link rel="stylesheet" href="../styles/globalStyles.css" />
+    <link rel="stylesheet" href="../styles/texts.css" />
+    <link rel="stylesheet" href="../styles/buttons.css" />
+    <link rel="stylesheet" href="../styles/inputs.css" />
+    <link rel="stylesheet" href="../styles/modals.css" />
+    <link rel="stylesheet" href="../styles/toasts.css" />
+    <link rel="stylesheet" href="../styles/loginPage.css" />
+
+    <script
+      src="https://kit.fontawesome.com/a2a7b902de.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script defer type="module" src="../scripts/loginPage.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="div-logo">
+            <img src="../assets/Ellipse_purple.png" alt="kenzie empresas" />
+            <h1>Kenzie Empresas</h1>
+          </div>
+          <div class="div-login-register-buttons">
+            <!-- <button id="hamburger-button" class="hidden">X</button> -->
+            <button
+              data-path="../../index.html"
+              id="button-home-registerPage"
+              class="buttons-default buttons-white buttons-redirect"
+            >
+              Home
+            </button>
+            <button
+              data-path="./registerPage.html"
+              id="button-register-loginPage"
+              class="buttons-default buttons-blue buttons-redirect"
+            >
+              Cadastrar
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="container-login">
+      <main id="box-login">
+        <div class="div-login-title-description">
+          <h1 class="font40-bold-poppins">Login</h1>
+          <h5 class="font18-regular-inter">
+            Preencha os campos para realizar login
+          </h5>
+        </div>
+        <form class="form-login">
+          <div class="form-login-inputs-select">
+            <input
+              name="email"
+              class="inputs-login inputs-default font18-regular-inter text-black-50"
+              type="email"
+              placeholder="Seu e-mail"
+            />
+            <input
+              name="password"
+              class="inputs-login inputs-default font18-regular-inter text-black-50"
+              type="password"
+              placeholder="Sua senha"
+            />
+          </div>
+          <button
+            class="button-submit-login buttons-default buttons-blue font18-bold-inter"
+            type="submit"
+          >
+            Login
+          </button>
+          <h5 class="font18-regular-inter">ou</h5>
+          <button
+            id="button-register-form-loginPage"
+            class="buttons-default buttons-white font18-bold-inter"
+          >
+            Cadastrar-se
+          </button>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kenzie Empresas | Perfil Pessoal</title>
+
+    <link rel="stylesheet" href="../styles/globalStyles.css" />
+    <link rel="stylesheet" href="../styles/texts.css" />
+    <link rel="stylesheet" href="../styles/buttons.css" />
+    <link rel="stylesheet" href="../styles/inputs.css" />
+    <link rel="stylesheet" href="../styles/modals.css" />
+    <link rel="stylesheet" href="../styles/toasts.css" />
+    <link rel="stylesheet" href="../styles/userPage.css" />
+
+    <script
+      src="https://kit.fontawesome.com/a2a7b902de.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script defer type="module" src="../scripts/userPage.js"></script>
+  </head>
+  <body>
+    <div class="modal-wrapper-view-department">
+      <main id="modal-view-department">
+        <button class="modal-close-view-department"><img src="../assets/Vector_close.png" alt="Botão fechar"></i></button>
+        <div class="div-modal-view-department-header">
+          <h1 class="font40-bold-poppins">Nome do departamento</h1>
+        </div>
+        <div class="div-modal-view-department-description">
+          <div class="div-modal-view-department-description-company">
+            <h4 class="font20-bold-poppins">Descrição do departamento</h4>
+            <h5 class="font18-regular-poppins">Empresa Pertencente</h5>
+          </div>
+          <div class="div-modal-view-department-select-button">
+            <select class="select-users-out_of_work font18-regular-inter text-black-50" name="select-user" id="select-user">
+              <option value="select-user">Selecionar Usuário</option>
+            </select>
+            <button class="buttons-default buttons-green font18-bold-inter">Contratar</button>
+          </div>
+        </div>
+        <div class="box-company-workers">
+          <article class="card-worker">
+            <div class="div-worker-info">
+              <h4 class="font20-bold-inter">Username</h4>
+              <h4 class="font18-regular-inter">Júnior</h4>
+              <h4 class="font18-regular-inter">Company Name</h4>
+            </div>
+            <div class="div-worker-button-dismiss">
+              <button id="button-dismiss-user-id" class="button-dismiss-user buttons-default buttons-red font18-bold-inter">Desligar</button>
+            </div>
+          </article>
+        </div>
+
+      </main>
+    </div>    
+  </body>
+</html>

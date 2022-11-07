@@ -1,0 +1,94 @@
+.container-login {
+  background-image: url(../assets/Rectangle\ 7.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100vw;
+}
+
+/* PROJECT HEADER */
+
+header {
+  width: 100vw;
+  height: 5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+}
+
+.div-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  height: 100%;
+}
+
+.div-login-register-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.688rem;
+}
+
+/* REGISTER */
+
+.container-login {
+  margin: 0 auto;
+  width: 100vw;
+  height: calc(100vh - 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#box-login {
+  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 32rem;
+  padding: 3rem 2.25rem;
+  gap: 1rem;
+}
+
+.div-login-title-description {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ gap: 0.5rem;
+}
+
+.form-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-login-inputs-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.813rem;
+}
+
+.button-submit-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#button-register-form-loginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
