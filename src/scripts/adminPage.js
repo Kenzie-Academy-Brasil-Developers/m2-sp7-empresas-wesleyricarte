@@ -13,9 +13,10 @@ import {
   listAllUsers,
 } from "./requests.js";
 
+verifyTokenAdmin();
 redirectEvent();
 
-async function verifyTokenAdmin() {
+export async function verifyTokenAdmin() {
   const body = document.querySelector("body");
 
   const userToken = JSON.parse(localStorage.getItem("@kenzieEmpresas:token"));
@@ -25,15 +26,25 @@ async function verifyTokenAdmin() {
   console.log(isAdmin);
 
   if (userToken.token == "") {
-    window.location.replace("../../index.html");
+    console.log('token não encontrado, replace')
+    
     localStorage.removeItem("@kenzieEmpresas:token");
-    body.insertAdjacentHTML("beforeend", "");
-  } else if (isAdmin.is_admin == false) {
-    window.location.replace("../../index.html");
     localStorage.removeItem("@kenzieEmpresas:is_admin");
+
     body.insertAdjacentHTML("beforeend", "");
-  } else {
+    window.location.replace("../../index.html");
+  } else if (isAdmin.is_admin != true) {
+    console.log('is_admin=false, replace')
+    
+    localStorage.removeItem("@kenzieEmpresas:token");
+    localStorage.removeItem("@kenzieEmpresas:is_admin");
+
+    body.insertAdjacentHTML("beforeend", "");
+    window.location.replace("../../index.html");
+  } else if (isAdmin.is_admin){
     // CARREGAR PÁGINA
+    console.log('is_admin=true, loading page')
+
     listCompanies();
     const allDep = await listAllDepartments(userToken.token);
     console.log(allDep);
@@ -42,7 +53,6 @@ async function verifyTokenAdmin() {
     await showAllUsers(userToken.token, allDep);
   }
 }
-verifyTokenAdmin();
 
 function logoutButton() {
   const btnLogout = document.querySelector("#button-logout-adminPage");

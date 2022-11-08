@@ -10,7 +10,7 @@ import {
 
 // CREATING MODALS USER
 
-export function createModalUpdateUserProfile(user) {
+export async function createModalUpdateUserProfile(user, token) {
   const body = document.querySelector("body");
 
   body.insertAdjacentHTML(
@@ -23,9 +23,9 @@ export function createModalUpdateUserProfile(user) {
         </div>
         <form class="form-update-user-profile">
           <div class="div-modal-form-inputs">
-            <input value="${user.username}" name="username" class="inputs-update-user-profile inputs-default font18-regular-inter" type="text" placeholder="Seu nome"/>
-            <input value="${user.email}" name="email" class="inputs-update-user-profile inputs-default font18-regular-inter" type="email" placeholder="Seu e-mail"/>
-            <input name="password" class="inputs-update-user-profile inputs-default font18-regular-inter" type="password" placeholder="Sua senha"/>
+            <input value="${user.username}" name="username" class="input-usrnme inputs-update-user-profile inputs-default font18-regular-inter" type="text" placeholder="Seu nome"/>
+            <input value="${user.email}" name="email" class="input-ml inputs-update-user-profile inputs-default font18-regular-inter" type="email" placeholder="Seu e-mail"/>
+            <input name="password" class="input-pssw inputs-update-user-profile inputs-default font18-regular-inter" type="password" placeholder="Sua senha"/>
           </div>
           <button class="button-submit-update-user-profile buttons-default buttons-blue font18-bold-inter" type="submit">Editar perfil</button>
         </form>
@@ -36,28 +36,38 @@ export function createModalUpdateUserProfile(user) {
   const modalWrapper = document.querySelector(".modal-wrapper");
   console.log(modalWrapper);
   const btnClose = document.querySelector(".modal-close");
-  const inputs = document.querySelectorAll(".inputs-update-user-profile");
-  const btnSub = document.querySelector(".button-submit-update-user-profile");
-  let data = {};
 
-  inputs.forEach((element) => {
-    data[element.name] = element.value;
-  });
-  console.log(data);
+  const inputUsername = document.querySelector(".input-usrnme");
+  const inputEmail = document.querySelector(".input-ml");
+  const inputPassword = document.querySelector(".input-pssw");
+
+  const btnSub = document.querySelector(".button-submit-update-user-profile");
 
   btnSub.addEventListener("click", (e) => {
+    const data = {
+      username: inputUsername.value,
+      email: inputEmail.value,
+      password: inputPassword.value,
+    };
+
     e.preventDefault();
     console.log("click on btnSub update-user-profile");
-    updateUserProfile(data);
     console.log(data);
+
+    callbackUpdateUserProfile(data, token);
     modalWrapper.remove();
   });
 
   btnClose.addEventListener("click", (e) => {
     e.preventDefault();
+    
     console.log("modal-wrapper removed");
     modalWrapper.remove();
   });
+}
+
+async function callbackUpdateUserProfile(data, token) {
+  await updateUserProfile(data, token);
 }
 
 // CREATING MODALS UPDATE USERS FROM ADMIN
@@ -202,19 +212,18 @@ export function createModalCreateDepartment(token, companies) {
   const inputDescrip = document.querySelector("#create-department-description");
   const btnSub = document.querySelector(".button-submit-create-department");
 
-  
   const dataNewDep = {
     name: inputDepartment.value,
     description: inputDescrip.value,
     company_uuid: selectTag.value,
   };
   console.log(dataNewDep);
-  
+
   btnSub.addEventListener("click", (e) => {
     e.preventDefault();
     console.log("click on btnSub update-user-profile");
-    console.log(inputDepartment)
-    console.log(inputDescrip)
+    console.log(inputDepartment);
+    console.log(inputDescrip);
     createDepartment(token, dataNewDep);
     modalWrapper.remove();
   });
@@ -317,9 +326,7 @@ export async function createModalViewDepartment(token, departmentId, allDep) {
     </div>`
   );
 
-  const boxCompanyWorkers = document.querySelector('.box-company-workers')
-
-  
+  const boxCompanyWorkers = document.querySelector(".box-company-workers");
 
   const selectUsersOutOfWork = document.querySelector(
     ".select-users-out_of_work"

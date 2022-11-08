@@ -20,8 +20,10 @@ export function verifyTokenUser() {
   if (userToken.token == "") {
     window.location.replace("../../index.html");
     localStorage.removeItem("@kenzieEmpresas:token");
+    localStorage.removeItem("@kenzieEmpresas:is_admin");
   } else if (isAdmin.is_admin == true) {
     window.location.replace("../../index.html");
+    localStorage.removeItem("@kenzieEmpresas:token");
     localStorage.removeItem("@kenzieEmpresas:is_admin");
   } else {
     getUserProfile(userToken.token);
@@ -31,7 +33,7 @@ export function verifyTokenUser() {
       );
       // console.log(user);
 
-      showDivUsername(user);
+      showDivUsername(user, userToken.token);
 
       if (user.department_uuid == null) {
         showBoxNotWorking();
@@ -57,7 +59,7 @@ logoutButton();
 
 // FUNCTION TO SHOW USER INFORMATION
 
-function showDivUsername(user) {
+function showDivUsername(user, token) {
   const container = document.querySelector("#main-container");
 
   container.insertAdjacentHTML(
@@ -82,7 +84,7 @@ function showDivUsername(user) {
   divUpdateProfile.addEventListener("click", (e) => {
     e.preventDefault();
 
-    createModalUpdateUserProfile(user);
+    createModalUpdateUserProfile(user, token);
   });
 }
 

@@ -225,13 +225,12 @@ export async function getUserDepartments(token) {
   }
 }
 
-export async function updateUserProfile(data) {
+export async function updateUserProfile(data, token) {
   try {
-    const token = getLocalStorage("@kenzieEmpresas:token");
-
     const request = await fetch(baseUrl + "/users", {
       method: "PATCH",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
@@ -245,6 +244,10 @@ export async function updateUserProfile(data) {
         JSON.stringify(response)
       );
       toast("Perfil atualizado com sucesso!");
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 4000);
       return response;
     } else {
       toast("Erro ao atualizar o perfil!");
